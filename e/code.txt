@@ -1,0 +1,87 @@
+DEVELOPMENT:
+
+"Improving" the word counter (point "a")
+----------------------------------------
+
+
+//Initializing spark-shell
+> spark-shell
+
+----------------------------PROCESS OUTPUT----------------------------
+...
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 2.2.0
+      /_/
+ 
+...
+----------------------------PROCESS OUTPUT----------------------------
+>scala
+
+
+//Creating the RDD.
+//Generate the RDD (Resilient distributed datasets).
+//RDD is the fundamental programming abstraction in Spark.
+//RDD is compose of trnasformations and actions.
+//Examples of transformations: filter, map, textFile. No computation is done, only 
+//DAG generated.
+//Examples of actions: collect, count, print. Computation of DAG.
+//Using the special variable "sc" (Spark context). It provide lot of
+//transformation functions.
+
+scala> val f = sc.textfile("FILE")
+
+----------------------------PROCESS OUTPUT----------------------------
+
+f: org.apache.spark.rdd.RDD[String] = 20417.txt MapPartitionsRDD[1] at textFile at <console>:24
+----------------------------PROCESS OUTPUT----------------------------
+
+
+//TRANSFORMATION AND ACTION stage.
+//An adventage of functional programming (short code).
+//NOTE: in Python or Java, is too posible make this exercise
+//with the same code lenght that in Scala.
+
+scala> val wc = f.flatMap(l=>l.split(" ")).map(word=>(word,1)).reduceByKey(_+_)
+
+
+//Puting the context as files (in the folder "output"
+
+scala> wc.saveAsTextFile("output")
+
+
+//Showing the result
+//In the folder (home/uhadoop/) of my case I have now a folder name: "output"
+//with three files: part-00000, part-00001,  _SUCCESS
+//Part of the file part-00000:
+
+scala>vim part-00000
+
+----------------------------PROCESS OUTPUT----------------------------
+(intimately,2)
+(rises.,2)
+(egg-shell,1)
+(bone,3)
+(INCREASE,2)
+(INCONCEIVABLY,2)
+(winter;,1)
+(ducklings,1)
+(chapters,1)
+(hunter,,1)
+(spirited,1)
+(preventing,2)
+(pigeon,4)
+(auroral,1)
+(been,260)
+(fuller,3)
+(spice,1)
+(lamp-shells,,2)
+(Dividing,1)
+(accomplished,2)
+(knows,7)
+(inch.,5)
+(_Jurassic_,1)
+...
+----------------------------PROCESS OUTPUT----------------------------
+
