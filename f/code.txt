@@ -1,0 +1,49 @@
+DEVELOPMENT:
+
+Spark Streaming provide a high level abstraction called discretized stream 
+(DStream) wich represent a continuous stream of data. Internally, a DStream
+is represented as a sequence of RDDs.
+
+
+Make a Word count but now with streaming
+----------------------------------------
+
+//In this point i used two terminals, one like "listener" and other like 
+//"speaker".
+
+//The listener terminal, is working with spark streaming and with a Python 
+//file with the logic for to count the quantity of words that comming from
+//the speaker.
+//In the speaker, is running the nc (netcat) utility for the transmission of
+//information.
+
+//Terminal 2 (speaker)
+
+>nc -lk 9999
+
+//Terminal 1 (listener)
+>spark-submit netWC.py localhost 9999
+
+//Showing the result from terminal 1.
+//Input from terminal 2: "testing streaming from Spark!"
+
+----------------------------PROCESS OUTPUT----------------------------
+-------------------------------------------
+Time: 2017-08-17 20:47:00
+-------------------------------------------
+(u'from', 1)
+(u'streaming', 1)
+(u'spark!', 1)
+(u'testing', 1)
+
+17/08/17 20:47:00 INFO JobScheduler: Finished job streaming job 1503013620000 ms.0 from job set of time 1503013620000 ms
+17/08/17 20:47:00 INFO JobScheduler: Total delay: 0.522 s for time 1503013620000 ms (execution: 0.460 s)
+17/08/17 20:47:00 INFO PythonRDD: Removing RDD 6 from persistence list
+17/08/17 20:47:00 INFO BlockManager: Removing RDD 6
+17/08/17 20:47:00 INFO BlockRDD: Removing RDD 1 from persistence list
+17/08/17 20:47:00 INFO BlockManager: Removing RDD 1
+17/08/17 20:47:00 INFO SocketInputDStream: Removing blocks of RDD BlockRDD[1] at socketTextStream at NativeMethodAccessorImpl.java:0 of time 1503013620000 ms
+17/08/17 20:47:00 INFO ReceivedBlockTracker: Deleting batches: 
+17/08/17 20:47:00 INFO InputInfoTracker: remove old batch metadata: 
+
+----------------------------PROCESS OUTPUT----------------------------
